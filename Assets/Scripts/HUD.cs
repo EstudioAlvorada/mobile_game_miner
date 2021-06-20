@@ -13,6 +13,8 @@ public class HUD : MonoBehaviour
     [SerializeField]
     GameObject menu;
 
+    string[] btn = { "BtnCasa" };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,9 @@ public class HUD : MonoBehaviour
     {
         pontos.text =ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal);
         madeira.text = ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Madeireira").pontosTotal);
+
+        if(menu.active)
+            ValoresBtn();
     }
 
     public void AbrirMenu()
@@ -102,7 +107,26 @@ public class HUD : MonoBehaviour
         else
             obj.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
-
     }
    
+    public void ValoresBtn()
+    {
+        foreach(var i in btn)
+        {
+            var butao = GameObject.Find("Canvas Principal/Menu/" + i);
+
+            var valorConstrucao = GameManager.Instance.valores.First(p => i.Contains(p.tipo) && p.nivel == GameManager.Instance.construcoes.First(x => x.tipo == p.tipo).numUpgrade);
+
+            string txtValor = $"<color=#FFF100> {valorConstrucao.valorDinheiro} </color>";
+
+            foreach(var x in valorConstrucao.ValorRecursos)
+            {
+                var cor = x.recursoNome == "Madeireira" ? "<color=#653C3C>" : "";
+                txtValor += $"{cor + x.recursoValor} </color>";
+            }
+
+            butao.GetComponentInChildren<TextMeshProUGUI>().text = txtValor;
+        }
+    }
+
 }
