@@ -11,6 +11,7 @@ public class Clicks : MonoBehaviour
 
     DataBase dataBase;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,11 @@ public class Clicks : MonoBehaviour
         click();
 
         Pontos();
+
+        foreach(var i in construcoes)
+        {
+            HUD.TextoAcumulacao(i);
+        }
     }
 
     void click()

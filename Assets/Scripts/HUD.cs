@@ -89,4 +89,20 @@ public class HUD : MonoBehaviour
         return result;
     }
 
+    public static void TextoAcumulacao(string tag)
+    {
+        var obj = GameObject.FindGameObjectWithTag(tag);
+
+        Vector3 point = obj.transform.position + new Vector3(0f, 1f, 0f);
+
+        obj.GetComponentInChildren<TextMeshProUGUI>().transform.position = point;
+
+        if (GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag).pontosAcumulados > 0)
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = new HUD().ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag).pontosAcumulados);
+        else
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = "";
+
+
+    }
+   
 }
