@@ -150,7 +150,7 @@ namespace Assets.Scripts
             {
                 if (construcoes.Find(i) == null)
                 {
-                    construcoes.Persist(new Construcoes() { tipo = i, numUpgrade = 1, pontosTotal = 0, ativo = true, ultimoTempo = 0f, velocidade = 1f });
+                    construcoes.Persist(new Construcoes() { tipo = i, numUpgrade = 1, pontosTotal = 0, pontosAcumulados =0, ativo = true, ultimoTempo = 0f, velocidade = 1f });
                 }
             }
 

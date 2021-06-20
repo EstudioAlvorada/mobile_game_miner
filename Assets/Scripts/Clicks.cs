@@ -63,21 +63,23 @@ public class Clicks : MonoBehaviour
     {
         bool retorno = false;
 
-        if (GameManager.Instance.GetConstrucaoNivelByName("Casa") > 1)
-            if (Time.time - GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").ultimoTempo >= GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").velocidade)
+        foreach(var i in GameManager.Instance.construcoes.Where(p => p.numUpgrade > 1))
+        {
+            if (Time.time - i.ultimoTempo >= i.velocidade)
             {
-                GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").ultimoTempo = Time.time;
+                GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.tipo).ultimoTempo = Time.time;
 
-                var valores = GetValores("Casa", GameManager.Instance.GetConstrucaoNivelByName("Casa"));
+                var valores = GetValores(i.tipo, i.numUpgrade);
 
-                GameManager.Instance.SetValores("Casa", valores[0], valores[1]);
+                GameManager.Instance.SetValoresAcumulados(i.tipo, valores[0], valores[1]);
 
-                Pulsa("Casa");
+                Pulsa(i.tipo);
 
                 dataBase.AutoSalvarPontuacoes();
 
                 retorno = true;
             }
+        }
 
         return retorno;
     }
