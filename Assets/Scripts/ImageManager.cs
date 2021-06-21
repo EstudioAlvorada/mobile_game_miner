@@ -48,7 +48,9 @@ public class ImagemBLI
         construcoes.Add("Mineradora");
 
         imagens.Add(new Imagem(Resources.Load<Sprite>("Casa"), "Casa", 1));
-        imagens.Add(new Imagem(Resources.Load<Sprite>("prediotop"), "Casa", 2));
+        imagens.Add(new Imagem(Resources.Load<Sprite>("Casa2"), "Casa", 2));
+        imagens.Add(new Imagem(Resources.Load<Sprite>("prediotop"), "Casa", 3));
+        imagens.Add(new Imagem(Resources.Load<Sprite>("prediotop2"), "Casa", 4));
         imagens.Add(new Imagem(Resources.Load<Sprite>("floresta"), "Madeireira", 1));
         imagens.Add(new Imagem(Resources.Load<Sprite>("Montanha"), "Mineradora", 1));
         imagens.Add(new Imagem(Resources.Load<Sprite>("Tela_principal_jogo"), "Background", 1));

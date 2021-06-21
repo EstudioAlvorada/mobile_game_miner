@@ -46,20 +46,20 @@ public class GameManager : MonoBehaviour
 
     internal void SetValores(string tag, float v, float v1)
     {
-        if (tag != "Casa")
+        if(construcoes.Where(p => p.tipo == tag && p.ativo).FirstOrDefault() != null)
         {
-            construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosTotal += (v + construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados);
-            construcoes.Where(p => p.tipo == "Casa").FirstOrDefault().pontosAcumulados += v1;
+            if (tag != "Casa")
+            {
+                construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosTotal += (v + construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados);
+                construcoes.Where(p => p.tipo == "Casa").FirstOrDefault().pontosAcumulados += v1;
+            }
+            else
+            {
+                construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosTotal += (v1 + construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados);
+            }
 
+            construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados = 0;
         }
-        else
-        {
-            construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosTotal += (v1 + construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados);
-
-        }
-
-        construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados = 0;
-
     }
 
     internal void SetValoresAcumulados(string tag, float v, float v1)

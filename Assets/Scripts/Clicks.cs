@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Clicks : MonoBehaviour
 {
-    string[] construcoes = { "Casa", "Madeireira" };
+    string[] construcoes = {"Casa", "Madeireira", "Mineradora" };
     Dictionary<string, Transform> tamanhos = new Dictionary<string, Transform>();
 
     DataBase dataBase;
@@ -34,6 +34,7 @@ public class Clicks : MonoBehaviour
 
         foreach(var i in construcoes)
         {
+            Debug.Log(i);
             HUD.TextoAcumulacao(i);
         }
     }
@@ -44,11 +45,13 @@ public class Clicks : MonoBehaviour
         {
             Vector3 pos = Input.mousePosition;
             Collider2D colisor = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(pos));
+            Debug.Log(colisor.tag);
+
 
             //casa (ponto:casa)
             if (colisor != null )
             {
-                if (construcoes.Contains(colisor.tag))
+                if (construcoes.Contains(colisor.tag) && GameManager.Instance.construcoes.First(p => p.tipo == colisor.tag).ativo)
                 {
                     StartCoroutine(Pulsando(colisor.tag));
 
@@ -58,10 +61,10 @@ public class Clicks : MonoBehaviour
 
                     dataBase.AutoSalvarPontuacoes();
 
+                    FindObjectOfType<AudioManager>().Play(colisor.tag);
+
                 }
-
             }
-
         }
     }
 
@@ -105,8 +108,11 @@ public class Clicks : MonoBehaviour
                 case "Madeireira":
                     valores.Add(1); valores.Add(0.2f);
                     break;
+                case "Mineradora":
+                    valores.Add(1); valores.Add(0.4f);
+                    break;
             }
-                break;
+            break;
             case 2:
             switch (tipo)
             {

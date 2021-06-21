@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     [SerializeField]
-    TextMeshProUGUI pontos, madeira;
+    TextMeshProUGUI pontos, madeira, minerio;
 
     [SerializeField]
     GameObject menu;
@@ -26,6 +26,7 @@ public class HUD : MonoBehaviour
     {
         pontos.text =ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal);
         madeira.text = ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Madeireira").pontosTotal);
+        minerio.text = ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").pontosTotal);
 
         if(menu.active)
             ValoresBtn();
@@ -49,15 +50,23 @@ public class HUD : MonoBehaviour
 
         if(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).pontosTotal >= valores.valorDinheiro)
         {
+            Debug.Log("Entrou");
+
             var verifica = true;
 
             foreach (var i in valores.ValorRecursos)
             {
-                verifica = verifica && i.recursoValor >= GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.recursoNome).pontosTotal;
+                verifica = verifica && i.recursoValor <= GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.recursoNome).pontosTotal;
+
+                Debug.Log(verifica);
+                Debug.Log(i.recursoNome +", "+ i.recursoValor);
+                Debug.Log(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.recursoNome).tipo);
             }
 
             if (verifica)
             {
+                Debug.Log("Entrou");
+
                 GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).pontosTotal -= valores.valorDinheiro;
 
                 foreach (var i in valores.ValorRecursos)
@@ -71,7 +80,10 @@ public class HUD : MonoBehaviour
             }
         }
 
-
+        if(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").ativo == false && tipo == "Casa" && GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).numUpgrade > 2)
+        {
+            GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").ativo = true;
+        }
     }
 
 
@@ -102,7 +114,7 @@ public class HUD : MonoBehaviour
 
         obj.GetComponentInChildren<TextMeshProUGUI>().transform.position = point;
 
-        if (GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag).pontosAcumulados > 0)
+        if (GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag && p.ativo) != null && GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag && p.ativo).pontosAcumulados > 0)
             obj.GetComponentInChildren<TextMeshProUGUI>().text = new HUD().ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag).pontosAcumulados);
         else
             obj.GetComponentInChildren<TextMeshProUGUI>().text = "";

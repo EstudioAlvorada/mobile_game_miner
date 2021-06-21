@@ -90,11 +90,11 @@ namespace Assets.Scripts
 
             var construcoes = construcoesFile.Collection<Construcoes, string>("construcoes", cons => cons.tipo);
 
-            foreach (var i in new string[] { "Casa", "Madeireira" })
+            foreach (var i in new string[] { "Casa", "Madeireira", "Mineradora" })
             {
                 var tipo = GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i);
 
-                construcoes.Persist(new Construcoes() { tipo = i, numUpgrade = tipo.numUpgrade, pontosTotal = tipo.pontosTotal, ativo = true, ultimoTempo = 0f, velocidade = 1f });
+                construcoes.Persist(new Construcoes() { tipo = i, numUpgrade = tipo.numUpgrade, pontosTotal = tipo.pontosTotal, ativo = tipo.ativo, ultimoTempo = 0f, velocidade = 1f });
                 
             }
 
@@ -150,7 +150,7 @@ namespace Assets.Scripts
             {
                 if (construcoes.Find(i) == null)
                 {
-                    construcoes.Persist(new Construcoes() { tipo = i, numUpgrade = 1, pontosTotal = 0, pontosAcumulados =0, ativo = true, ultimoTempo = 0f, velocidade = 1f });
+                    construcoes.Persist(new Construcoes() { tipo = i, numUpgrade = 1, pontosTotal = 0, pontosAcumulados = 0, ativo = i == "Mineradora" ? false : true, ultimoTempo = 0f, velocidade = 1f });
                 }
             }
 
@@ -182,7 +182,7 @@ namespace Assets.Scripts
             teste = new List<ValorRecurso>();
             teste.Add(new ValorRecurso("Madeireira", 330f));
             teste.Add(new ValorRecurso("Mineradora", 300f));
-            teste.Add(new ValorRecurso("Minerio", 240f));
+            teste.Add(new ValorRecurso("Petroleo", 240f));
 
             valores.Persist(new Valores() { id = 5, tipo = "Casa", nivel = 5, valorDinheiro = 550, ValorRecursos = teste });
 
