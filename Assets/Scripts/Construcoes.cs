@@ -9,6 +9,7 @@ namespace Cidadezinha.Construcoes
         public string tipo;
         public int numUpgrade;
         public float pontosTotal;
+        public float pontosAcumulados;
         public bool ativo;
         public float ultimoTempo = 0f;
         public float velocidade = 1f;

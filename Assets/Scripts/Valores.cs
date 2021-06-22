@@ -30,4 +30,11 @@ namespace Assets.Scripts
         public string recursoNome { get; set; }
         public float recursoValor { get; set; }
     }
+
+    public class Config
+    {
+        public int id { get; set; }
+        public bool aberto { get; set; }
+        public DateTime ultimoGame { get; set; }
+    }
 }

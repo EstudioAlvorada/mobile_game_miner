@@ -8,6 +8,8 @@ TagManager:
   - Madeireira
   - Background
   - Mineradora
+  - PopUp
+  - Pasta PopUp
   layers:
   - Default
   - TransparentFX

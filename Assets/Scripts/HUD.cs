@@ -8,10 +8,12 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     [SerializeField]
-    TextMeshProUGUI pontos, madeira;
+    TextMeshProUGUI pontos, madeira, minerio;
 
     [SerializeField]
     GameObject menu;
+
+    string[] btn = { "BtnCasa" };
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,10 @@ public class HUD : MonoBehaviour
     {
         pontos.text =ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal);
         madeira.text = ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Madeireira").pontosTotal);
+        minerio.text = ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").pontosTotal);
+
+        if(menu.active)
+            ValoresBtn();
     }
 
     public void AbrirMenu()
@@ -44,15 +50,23 @@ public class HUD : MonoBehaviour
 
         if(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).pontosTotal >= valores.valorDinheiro)
         {
+            Debug.Log("Entrou");
+
             var verifica = true;
 
             foreach (var i in valores.ValorRecursos)
             {
-                verifica = verifica && i.recursoValor >= GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.recursoNome).pontosTotal;
+                verifica = verifica && i.recursoValor <= GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.recursoNome).pontosTotal;
+
+                Debug.Log(verifica);
+                Debug.Log(i.recursoNome +", "+ i.recursoValor);
+                Debug.Log(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.recursoNome).tipo);
             }
 
             if (verifica)
             {
+                Debug.Log("Entrou");
+
                 GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).pontosTotal -= valores.valorDinheiro;
 
                 foreach (var i in valores.ValorRecursos)
@@ -66,7 +80,10 @@ public class HUD : MonoBehaviour
             }
         }
 
-
+        if(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").ativo == false && tipo == "Casa" && GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).numUpgrade > 2)
+        {
+            GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").ativo = true;
+        }
     }
 
 
@@ -87,6 +104,41 @@ public class HUD : MonoBehaviour
 
 
         return result;
+    }
+
+    public static void TextoAcumulacao(string tag)
+    {
+        var obj = GameObject.FindGameObjectWithTag(tag);
+
+        Vector3 point = obj.transform.position + new Vector3(0f, 1f, 0f);
+
+        obj.GetComponentInChildren<TextMeshProUGUI>().transform.position = point;
+
+        if (GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag && p.ativo) != null && GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag && p.ativo).pontosAcumulados > 0)
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = new HUD().ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag).pontosAcumulados);
+        else
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = "";
+
+    }
+   
+    public void ValoresBtn()
+    {
+        foreach(var i in btn)
+        {
+            var butao = GameObject.Find("Canvas Principal/Menu/" + i);
+
+            var valorConstrucao = GameManager.Instance.valores.First(p => i.Contains(p.tipo) && p.nivel == GameManager.Instance.construcoes.First(x => x.tipo == p.tipo).numUpgrade);
+
+            string txtValor = $"<color=#FFF100> {valorConstrucao.valorDinheiro} </color>";
+
+            foreach(var x in valorConstrucao.ValorRecursos)
+            {
+                var cor = x.recursoNome == "Madeireira" ? "<color=#653C3C>" : "";
+                txtValor += $"{cor + x.recursoValor} </color>";
+            }
+
+            butao.GetComponentInChildren<TextMeshProUGUI>().text = txtValor;
+        }
     }
 
 }

@@ -6,10 +6,11 @@ using UnityEngine;
 
 public class Clicks : MonoBehaviour
 {
-    string[] construcoes = { "Casa", "Madeireira" };
+    string[] construcoes = {"Casa", "Madeireira", "Mineradora" };
     Dictionary<string, Transform> tamanhos = new Dictionary<string, Transform>();
 
     DataBase dataBase;
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,12 @@ public class Clicks : MonoBehaviour
         click();
 
         Pontos();
+
+        foreach(var i in construcoes)
+        {
+            Debug.Log(i);
+            HUD.TextoAcumulacao(i);
+        }
     }
 
     void click()
@@ -38,11 +45,13 @@ public class Clicks : MonoBehaviour
         {
             Vector3 pos = Input.mousePosition;
             Collider2D colisor = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(pos));
+            Debug.Log(colisor.tag);
+
 
             //casa (ponto:casa)
             if (colisor != null )
             {
-                if (construcoes.Contains(colisor.tag))
+                if (construcoes.Contains(colisor.tag) && GameManager.Instance.construcoes.First(p => p.tipo == colisor.tag).ativo)
                 {
                     StartCoroutine(Pulsando(colisor.tag));
 
@@ -52,10 +61,10 @@ public class Clicks : MonoBehaviour
 
                     dataBase.AutoSalvarPontuacoes();
 
+                    FindObjectOfType<AudioManager>().Play(colisor.tag);
+
                 }
-
             }
-
         }
     }
 
@@ -63,21 +72,23 @@ public class Clicks : MonoBehaviour
     {
         bool retorno = false;
 
-        if (GameManager.Instance.GetConstrucaoNivelByName("Casa") > 1)
-            if (Time.time - GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").ultimoTempo >= GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").velocidade)
+        foreach(var i in GameManager.Instance.construcoes.Where(p => p.numUpgrade > 1))
+        {
+            if (Time.time - i.ultimoTempo >= i.velocidade)
             {
-                GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").ultimoTempo = Time.time;
+                GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.tipo).ultimoTempo = Time.time;
 
-                var valores = GetValores("Casa", GameManager.Instance.GetConstrucaoNivelByName("Casa"));
+                var valores = GetValores(i.tipo, i.numUpgrade);
 
-                GameManager.Instance.SetValores("Casa", valores[0], valores[1]);
+                GameManager.Instance.SetValoresAcumulados(i.tipo, valores[0], valores[1]);
 
-                Pulsa("Casa");
+                Pulsa(i.tipo);
 
                 dataBase.AutoSalvarPontuacoes();
 
                 retorno = true;
             }
+        }
 
         return retorno;
     }
@@ -97,8 +108,11 @@ public class Clicks : MonoBehaviour
                 case "Madeireira":
                     valores.Add(1); valores.Add(0.2f);
                     break;
+                case "Mineradora":
+                    valores.Add(1); valores.Add(0.4f);
+                    break;
             }
-                break;
+            break;
             case 2:
             switch (tipo)
             {
