@@ -101,6 +101,23 @@ namespace Assets.Scripts
             session.Dispose();
         }
 
+        public void SaveConfig()
+        {
+            string dataPath = $"{Application.dataPath}/Base/";
+
+            var session = new MarcelloDB.Session(platform, dataPath);
+
+            var baseFile = session["base.dat"];
+
+            var config = baseFile.Collection<Config, int>("config", cons => cons.id);
+
+            config.Persist(new Config() {id = GameManager.Instance.config.id, aberto = GameManager.Instance.config.aberto, ultimoGame = DateTime.Now });
+
+            
+
+            session.Dispose();
+        }
+
         public List<Construcoes> GetAllConstrucoes()
         {
             string dataPath = $"{Application.dataPath}/Base/";
@@ -136,57 +153,83 @@ namespace Assets.Scripts
             return tudo;
         }
 
-        public void CriarBanco()
+        public Config GetConfig()
         {
             string dataPath = $"{Application.dataPath}/Base/";
 
             var session = new MarcelloDB.Session(platform, dataPath);
 
-            var baseFile = session["base.dat"];
+            var construcoesFile = session["base.dat"];
 
-            var construcoes = baseFile.Collection<Construcoes, string>("construcoes", cons => cons.tipo);
+            var config = construcoesFile.Collection<Config, int>("config", cons => cons.id);
 
-            foreach (var i in new string[] { "Casa", "Madeireira", "Mineradora" })
-            {
-                if (construcoes.Find(i) == null)
-                {
-                    construcoes.Persist(new Construcoes() { tipo = i, numUpgrade = 1, pontosTotal = 0, pontosAcumulados = 0, ativo = i == "Mineradora" ? false : true, ultimoTempo = 0f, velocidade = 1f });
-                }
-            }
+            config.All.ToList().ForEach(p => Debug.Log(p.aberto));
 
-            var valores = baseFile.Collection<Valores, int>("valores", cons => cons.id);
-
-            var teste = new List<ValorRecurso>();
-
-            valores.Persist(new Valores() { id = 1, tipo = "Casa", nivel = 1, valorDinheiro = 120, ValorRecursos = teste });
-
-            teste = new List<ValorRecurso>();
-            teste.Add(new ValorRecurso("Madeireira", 70f));
-
-            valores.Persist(new Valores() { id = 2, tipo = "Casa", nivel = 2, valorDinheiro = 200, ValorRecursos = teste });
-
-            teste = new List<ValorRecurso>();
-            teste.Add(new ValorRecurso("Madeireira", 150f));
-            teste.Add(new ValorRecurso("Mineradora", 90f));
-
-            valores.Persist(new Valores() { id = 3, tipo = "Casa", nivel = 3, valorDinheiro = 280, ValorRecursos = teste });
-
-
-            teste = new List<ValorRecurso>();
-            teste.Add(new ValorRecurso("Madeireira", 240f));
-            teste.Add(new ValorRecurso("Mineradora", 210f));
-            teste.Add(new ValorRecurso("Petroleo", 150f));
-
-            valores.Persist(new Valores() { id = 4, tipo = "Casa", nivel = 4, valorDinheiro = 380, ValorRecursos = teste });
-
-            teste = new List<ValorRecurso>();
-            teste.Add(new ValorRecurso("Madeireira", 330f));
-            teste.Add(new ValorRecurso("Mineradora", 300f));
-            teste.Add(new ValorRecurso("Petroleo", 240f));
-
-            valores.Persist(new Valores() { id = 5, tipo = "Casa", nivel = 5, valorDinheiro = 550, ValorRecursos = teste });
+            var tudo = config.All.First();
 
             session.Dispose();
+
+            return tudo;
+        }
+
+        public void CriarBanco()
+        {
+            string dataPath = $"{Application.dataPath}/Base/";
+
+            if(!File.Exists(dataPath + "base.dat"))
+            {
+                var session = new MarcelloDB.Session(platform, dataPath);
+
+                var baseFile = session["base.dat"];
+
+                var construcoes = baseFile.Collection<Construcoes, string>("construcoes", cons => cons.tipo);
+
+                foreach (var i in new string[] { "Casa", "Madeireira", "Mineradora" })
+                {
+                    if (construcoes.Find(i) == null)
+                    {
+                        construcoes.Persist(new Construcoes() { tipo = i, numUpgrade = 1, pontosTotal = 0, pontosAcumulados = 0, ativo = i == "Mineradora" ? false : true, ultimoTempo = 0f, velocidade = 1f });
+                    }
+                }
+
+                var valores = baseFile.Collection<Valores, int>("valores", cons => cons.id);
+
+                var teste = new List<ValorRecurso>();
+
+                valores.Persist(new Valores() { id = 1, tipo = "Casa", nivel = 1, valorDinheiro = 120, ValorRecursos = teste });
+
+                teste = new List<ValorRecurso>();
+                teste.Add(new ValorRecurso("Madeireira", 70f));
+
+                valores.Persist(new Valores() { id = 2, tipo = "Casa", nivel = 2, valorDinheiro = 200, ValorRecursos = teste });
+
+                teste = new List<ValorRecurso>();
+                teste.Add(new ValorRecurso("Madeireira", 150f));
+                teste.Add(new ValorRecurso("Mineradora", 90f));
+
+                valores.Persist(new Valores() { id = 3, tipo = "Casa", nivel = 3, valorDinheiro = 280, ValorRecursos = teste });
+
+
+                teste = new List<ValorRecurso>();
+                teste.Add(new ValorRecurso("Madeireira", 240f));
+                teste.Add(new ValorRecurso("Mineradora", 210f));
+                teste.Add(new ValorRecurso("Petroleo", 150f));
+
+                valores.Persist(new Valores() { id = 4, tipo = "Casa", nivel = 4, valorDinheiro = 380, ValorRecursos = teste });
+
+                teste = new List<ValorRecurso>();
+                teste.Add(new ValorRecurso("Madeireira", 330f));
+                teste.Add(new ValorRecurso("Mineradora", 300f));
+                teste.Add(new ValorRecurso("Petroleo", 240f));
+
+                valores.Persist(new Valores() { id = 5, tipo = "Casa", nivel = 5, valorDinheiro = 550, ValorRecursos = teste });
+
+                var config = baseFile.Collection<Config, int>("config", cons => cons.id);
+
+                config.Persist(new Config() { id = 1, aberto = false, ultimoGame = DateTime.Now });
+
+                session.Dispose();
+            }
         }
     }
 }

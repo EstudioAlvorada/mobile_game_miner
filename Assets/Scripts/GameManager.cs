@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
     public List<Construcoes> construcoes { get; set; }
     public List<Valores> valores { get; set; }
+    public Config config { get; set; }
 
     void Awake()
     {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             Instance.construcoes = new DataBase().GetAllConstrucoes();
             Instance.valores = new DataBase().GetAllValores();
+            Instance.config = new DataBase().GetConfig();
             DontDestroyOnLoad(gameObject);
         }
         else
