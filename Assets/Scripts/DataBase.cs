@@ -196,18 +196,18 @@ namespace Assets.Scripts
 
                 var teste = new List<ValorRecurso>();
 
-                valores.Persist(new Valores() { id = 1, tipo = "Casa", nivel = 1, valorDinheiro = 120, ValorRecursos = teste });
+                valores.Persist(new Valores() { id = 1, tipo = "Casa", nivel = 1, valorDinheiro = 120, limiteArmazenamento = 20, ValorRecursos = teste });
 
                 teste = new List<ValorRecurso>();
                 teste.Add(new ValorRecurso("Madeireira", 70f));
 
-                valores.Persist(new Valores() { id = 2, tipo = "Casa", nivel = 2, valorDinheiro = 200, ValorRecursos = teste });
+                valores.Persist(new Valores() { id = 2, tipo = "Casa", nivel = 2, valorDinheiro = 200, limiteArmazenamento = 50,ValorRecursos = teste });
 
                 teste = new List<ValorRecurso>();
                 teste.Add(new ValorRecurso("Madeireira", 150f));
                 teste.Add(new ValorRecurso("Mineradora", 90f));
 
-                valores.Persist(new Valores() { id = 3, tipo = "Casa", nivel = 3, valorDinheiro = 280, ValorRecursos = teste });
+                valores.Persist(new Valores() { id = 3, tipo = "Casa", nivel = 3, valorDinheiro = 280, limiteArmazenamento = 100, ValorRecursos = teste });
 
 
                 teste = new List<ValorRecurso>();
@@ -215,14 +215,14 @@ namespace Assets.Scripts
                 teste.Add(new ValorRecurso("Mineradora", 210f));
                 teste.Add(new ValorRecurso("Petroleo", 150f));
 
-                valores.Persist(new Valores() { id = 4, tipo = "Casa", nivel = 4, valorDinheiro = 380, ValorRecursos = teste });
+                valores.Persist(new Valores() { id = 4, tipo = "Casa", nivel = 4, valorDinheiro = 380, limiteArmazenamento = 150, ValorRecursos = teste });
 
                 teste = new List<ValorRecurso>();
                 teste.Add(new ValorRecurso("Madeireira", 330f));
                 teste.Add(new ValorRecurso("Mineradora", 300f));
                 teste.Add(new ValorRecurso("Petroleo", 240f));
 
-                valores.Persist(new Valores() { id = 5, tipo = "Casa", nivel = 5, valorDinheiro = 550, ValorRecursos = teste });
+                valores.Persist(new Valores() { id = 5, tipo = "Casa", nivel = 5, valorDinheiro = 550, limiteArmazenamento = 200, ValorRecursos = teste });
 
                 var config = baseFile.Collection<Config, int>("config", cons => cons.id);
 
