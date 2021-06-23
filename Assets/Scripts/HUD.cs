@@ -24,9 +24,9 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pontos.text =ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal);
-        madeira.text = ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Madeireira").pontosTotal);
-        minerio.text = ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").pontosTotal);
+        pontos.text = "<size=120><sprite=3></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal);
+        madeira.text = "<size=130><sprite=1></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Madeireira").pontosTotal);
+        minerio.text = "<size=130><sprite=4></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").pontosTotal);
 
         if(menu.active)
             ValoresBtn();
@@ -129,11 +129,11 @@ public class HUD : MonoBehaviour
 
             var valorConstrucao = GameManager.Instance.valores.First(p => i.Contains(p.tipo) && p.nivel == GameManager.Instance.construcoes.First(x => x.tipo == p.tipo).numUpgrade);
 
-            string txtValor = $"<color=#FFF100> {valorConstrucao.valorDinheiro} </color>";
+            string txtValor = $"<sprite=3><color=#FFF100> {valorConstrucao.valorDinheiro} </color>";
 
             foreach(var x in valorConstrucao.ValorRecursos)
             {
-                var cor = x.recursoNome == "Madeireira" ? "<color=#653C3C>" : "";
+                var cor = x.recursoNome == "Madeireira" ? "<sprite=1><color=#653C3C>" : x.recursoNome == "Mineradora" ? "<sprite=4><color=#525252>" : "";
                 txtValor += $"{cor + x.recursoValor} </color>";
             }
 
