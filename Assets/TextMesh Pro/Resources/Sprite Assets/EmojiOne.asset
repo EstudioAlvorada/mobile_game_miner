@@ -83,26 +83,26 @@ MonoBehaviour:
     m_Unicode: 128522
     m_GlyphIndex: 0
     m_Scale: 1
-    m_Name: Smiling face with smiling eyes
-    m_HashCode: -1318250903
+    m_Name: Madeireira
+    m_HashCode: -752008503
   - m_ElementType: 2
     m_Unicode: 128525
     m_GlyphIndex: 2
     m_Scale: 1
-    m_Name: 1f60d
-    m_HashCode: 57188341
+    m_Name: Petroleo
+    m_HashCode: 1008491514
   - m_ElementType: 2
     m_Unicode: 128526
     m_GlyphIndex: 3
     m_Scale: 1
-    m_Name: 1f60e
-    m_HashCode: 57188340
+    m_Name: Casa
+    m_HashCode: 2445296
   - m_ElementType: 2
     m_Unicode: 128512
     m_GlyphIndex: 4
     m_Scale: 1
-    m_Name: Grinning face
-    m_HashCode: -95541379
+    m_Name: Mineradora
+    m_HashCode: 388739780
   - m_ElementType: 2
     m_Unicode: 128513
     m_GlyphIndex: 5

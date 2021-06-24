@@ -13,7 +13,7 @@ public class HUD : MonoBehaviour
     [SerializeField]
     GameObject menu;
 
-    string[] btn = { "BtnCasa" };
+    string[] btn = { "BtnCasa", "BtnMadeireira" };
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +24,9 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pontos.text = "<size=120><sprite=3></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal);
-        madeira.text = "<size=130><sprite=1></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Madeireira").pontosTotal);
-        minerio.text = "<size=130><sprite=4></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").pontosTotal);
+        pontos.text = "<size=120><sprite name=Casa></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal);
+        madeira.text = "<size=130><sprite name=Madeireira></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Madeireira").pontosTotal);
+        minerio.text = "<size=130><sprite name=Mineradora></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").pontosTotal);
 
         if(menu.active)
             ValoresBtn();
@@ -48,7 +48,7 @@ public class HUD : MonoBehaviour
         GameManager.Instance.valores.ForEach(p => Debug.Log(p.valorDinheiro));
         GameManager.Instance.construcoes.ForEach(p => Debug.Log($"{p.numUpgrade}, {p.tipo}"));
 
-        if(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).pontosTotal >= valores.valorDinheiro)
+        if(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal >= valores.valorDinheiro)
         {
             Debug.Log("Entrou");
 
@@ -67,7 +67,7 @@ public class HUD : MonoBehaviour
             {
                 Debug.Log("Entrou");
 
-                GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).pontosTotal -= valores.valorDinheiro;
+                GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Casa").pontosTotal -= valores.valorDinheiro;
 
                 foreach (var i in valores.ValorRecursos)
                 {
@@ -110,12 +110,12 @@ public class HUD : MonoBehaviour
     {
         var obj = GameObject.FindGameObjectWithTag(tag);
 
-        Vector3 point = obj.transform.position + new Vector3(0f, 1f, 0f);
+        Vector3 point = obj.transform.position + new Vector3(0f, (obj.GetComponent<BoxCollider2D>().bounds.size.y / 2 + 0.2F), 0f);
 
         obj.GetComponentInChildren<TextMeshProUGUI>().transform.position = point;
 
         if (GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag && p.ativo) != null && GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag && p.ativo).pontosAcumulados > 0)
-            obj.GetComponentInChildren<TextMeshProUGUI>().text = new HUD().ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag).pontosAcumulados);
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = $"<sprite name={tag}>" + new HUD().ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tag).pontosAcumulados);
         else
             obj.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
