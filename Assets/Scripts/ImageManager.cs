@@ -51,9 +51,14 @@ public class ImagemBLI
         imagens.Add(new Imagem(Resources.Load<Sprite>("Casa2"), "Casa", 2));
         imagens.Add(new Imagem(Resources.Load<Sprite>("prediotop"), "Casa", 3));
         imagens.Add(new Imagem(Resources.Load<Sprite>("prediotop2"), "Casa", 4));
+
         imagens.Add(new Imagem(Resources.Load<Sprite>("floresta"), "Madeireira", 1));
+        imagens.Add(new Imagem(Resources.Load<Sprite>("floresta2"), "Madeireira", 2));
+
         imagens.Add(new Imagem(Resources.Load<Sprite>("Montanha"), "Mineradora", 1));
+
         imagens.Add(new Imagem(Resources.Load<Sprite>("Tela_principal_jogo"), "Background", 1));
+
 
     }
 
@@ -90,5 +95,15 @@ public class ImagemBLI
         Debug.Log(obj.name);
 
         return obj.gameObject.GetComponent<SpriteRenderer>().sprite = imagens.Where(p => p.nome == nome).FirstOrDefault().img;
+    }
+
+    public Sprite GetmagemUpgrade(string nome)
+    {
+        CarregaImagens();
+
+        GameObject obj = GameObject.FindGameObjectWithTag(nome);
+
+        return obj.gameObject.GetComponent<SpriteRenderer>().sprite = imagens.Where(p => p.nome == $"Upgrade{nome}").FirstOrDefault().img;
+
     }
 }

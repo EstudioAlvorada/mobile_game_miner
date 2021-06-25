@@ -106,10 +106,10 @@ public class Clicks : MonoBehaviour
                     valores.Add(0);valores.Add(1);
                     break;
                 case "Madeireira":
-                    valores.Add(1); valores.Add(0.2f);
+                    valores.Add(2); valores.Add(0);
                     break;
                 case "Mineradora":
-                    valores.Add(1); valores.Add(0.4f);
+                    valores.Add(3); valores.Add(0.4f);
                     break;
             }
             break;
@@ -120,7 +120,7 @@ public class Clicks : MonoBehaviour
                     valores.Add(0);valores.Add(3);
                     break;
                 case "Madeireira":
-                    valores.Add(2); valores.Add(0.5f);
+                    valores.Add(4); valores.Add(1);
                     break;
             }
             break;
@@ -131,7 +131,7 @@ public class Clicks : MonoBehaviour
                     valores.Add(0);valores.Add(5);
                     break;
                 case "Madeireira":
-                    valores.Add(3); valores.Add(1);
+                    valores.Add(6); valores.Add(2);
                     break;
             }
             break;
@@ -142,7 +142,7 @@ public class Clicks : MonoBehaviour
                     valores.Add(0); valores.Add(7);
                     break;
                 case "Madeireira":
-                    valores.Add(4); valores.Add(1.5f);
+                    valores.Add(8); valores.Add(3);
                     break;
             }
             break;
@@ -153,7 +153,7 @@ public class Clicks : MonoBehaviour
                     valores.Add(0); valores.Add(10);
                     break;
                 case "Madeireira":
-                    valores.Add(5); valores.Add(5.2f);
+                    valores.Add(11); valores.Add(4);
                     break;
             }
             break;

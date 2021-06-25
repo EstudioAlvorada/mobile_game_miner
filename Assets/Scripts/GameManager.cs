@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             if (tag != "Casa")
             {
                 construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosTotal += (v + construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados);
-                construcoes.Where(p => p.tipo == "Casa").FirstOrDefault().pontosAcumulados += v1;
+                construcoes.Where(p => p.tipo == "Casa").FirstOrDefault().pontosAcumulados += CalculaArmazenamento("Casa", v1);
             }
             else
             {
@@ -66,11 +66,36 @@ public class GameManager : MonoBehaviour
 
     internal void SetValoresAcumulados(string tag, float v, float v1)
     {
+        var obj = construcoes.Where(p => p.tipo == tag).FirstOrDefault();
         if (tag != "Casa")
-            construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados += v;
+            construcoes.Where(p => p.tipo == tag).FirstOrDefault().pontosAcumulados += CalculaArmazenamento(tag, v);
 
-        construcoes.Where(p => p.tipo == "Casa").FirstOrDefault().pontosAcumulados += v1;
+        obj = construcoes.Where(p => p.tipo == "Casa").FirstOrDefault();
+        construcoes.Where(p => p.tipo == "Casa").FirstOrDefault().pontosAcumulados += CalculaArmazenamento("Casa", v1);
 
     }
 
+    public bool VerificaArmazenamento(string tag)
+    {
+        var obj = construcoes.Where(p => p.tipo == tag).FirstOrDefault();
+        return obj.pontosAcumulados <= valores.First(p => p.tipo == tag && p.nivel == obj.numUpgrade).limiteArmazenamento;
+    }
+
+    public Construcoes GetConstrucaoNome(string tag)
+    {
+        return construcoes.First(p => p.tipo == tag);
+    }
+
+    public Valores GetValoresNomeNivel(string tag)
+    {
+        return valores.First(p => p.tipo == tag && p.nivel == GetConstrucaoNivelByName(tag));
+    }
+
+    public float CalculaArmazenamento(string tag, float valor)
+    {
+        var valores = GetValoresNomeNivel(tag);
+        var obj = GetConstrucaoNome(tag);
+
+        return VerificaArmazenamento("Casa") ? obj.pontosAcumulados + valor >= valores.limiteArmazenamento ? (-1 * obj.pontosAcumulados) + valores.limiteArmazenamento : valor : 0;
+    }
 }

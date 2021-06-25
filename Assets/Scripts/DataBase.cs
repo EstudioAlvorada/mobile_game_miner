@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cidadezinha.Construcoes;
 using MarcelloDB;
+using MarcelloDB.Collections;
 using MarcelloDB.Platform;
 using UnityEngine;
 
@@ -194,35 +195,8 @@ namespace Assets.Scripts
 
                 var valores = baseFile.Collection<Valores, int>("valores", cons => cons.id);
 
-                var teste = new List<ValorRecurso>();
-
-                valores.Persist(new Valores() { id = 1, tipo = "Casa", nivel = 1, valorDinheiro = 120, ValorRecursos = teste });
-
-                teste = new List<ValorRecurso>();
-                teste.Add(new ValorRecurso("Madeireira", 70f));
-
-                valores.Persist(new Valores() { id = 2, tipo = "Casa", nivel = 2, valorDinheiro = 200, ValorRecursos = teste });
-
-                teste = new List<ValorRecurso>();
-                teste.Add(new ValorRecurso("Madeireira", 150f));
-                teste.Add(new ValorRecurso("Mineradora", 90f));
-
-                valores.Persist(new Valores() { id = 3, tipo = "Casa", nivel = 3, valorDinheiro = 280, ValorRecursos = teste });
-
-
-                teste = new List<ValorRecurso>();
-                teste.Add(new ValorRecurso("Madeireira", 240f));
-                teste.Add(new ValorRecurso("Mineradora", 210f));
-                teste.Add(new ValorRecurso("Petroleo", 150f));
-
-                valores.Persist(new Valores() { id = 4, tipo = "Casa", nivel = 4, valorDinheiro = 380, ValorRecursos = teste });
-
-                teste = new List<ValorRecurso>();
-                teste.Add(new ValorRecurso("Madeireira", 330f));
-                teste.Add(new ValorRecurso("Mineradora", 300f));
-                teste.Add(new ValorRecurso("Petroleo", 240f));
-
-                valores.Persist(new Valores() { id = 5, tipo = "Casa", nivel = 5, valorDinheiro = 550, ValorRecursos = teste });
+                ValoresCasa(valores);
+                ValoresMadeireira(valores);
 
                 var config = baseFile.Collection<Config, int>("config", cons => cons.id);
 
@@ -230,6 +204,73 @@ namespace Assets.Scripts
 
                 session.Dispose();
             }
+        }
+
+        void ValoresCasa(Collection<Valores,int> valores)
+        {
+            var teste = new List<ValorRecurso>();
+
+            valores.Persist(new Valores() { id = 1, tipo = "Casa", nivel = 1, valorDinheiro = 150, limiteArmazenamento = 20, ValorRecursos = teste });
+
+            teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 340));
+
+            valores.Persist(new Valores() { id = 2, tipo = "Casa", nivel = 2, valorDinheiro = 550, limiteArmazenamento = 50, ValorRecursos = teste });
+
+            teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 810));
+            teste.Add(new ValorRecurso("Mineradora", 460));
+
+            valores.Persist(new Valores() { id = 3, tipo = "Casa", nivel = 3, valorDinheiro = 1250, limiteArmazenamento = 100, ValorRecursos = teste });
+
+
+            teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 2200));
+            teste.Add(new ValorRecurso("Mineradora", 1500));
+            teste.Add(new ValorRecurso("Petroleo", 580));
+
+            valores.Persist(new Valores() { id = 4, tipo = "Casa", nivel = 4, valorDinheiro = 3100, limiteArmazenamento = 150, ValorRecursos = teste });
+
+            teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 5300));
+            teste.Add(new ValorRecurso("Mineradora", 3900));
+            teste.Add(new ValorRecurso("Petroleo", 2100));
+
+            valores.Persist(new Valores() { id = 5, tipo = "Casa", nivel = 5, valorDinheiro = 7500, limiteArmazenamento = 200, ValorRecursos = teste });
+        }
+
+        void ValoresMadeireira(Collection<Valores, int> valores)
+        {
+            var teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 90));
+
+            valores.Persist(new Valores() { id = 6, tipo = "Madeireira", nivel = 1, valorDinheiro = 200, limiteArmazenamento = 20, ValorRecursos = teste });
+
+            teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 470));
+
+            valores.Persist(new Valores() { id = 7, tipo = "Madeireira", nivel = 2, valorDinheiro = 650, limiteArmazenamento = 50, ValorRecursos = teste });
+
+            teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 940));
+            teste.Add(new ValorRecurso("Mineradora", 590));
+
+            valores.Persist(new Valores() { id = 8, tipo = "Madeireira", nivel = 3, valorDinheiro = 1350, limiteArmazenamento = 100, ValorRecursos = teste });
+
+
+            teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 2330));
+            teste.Add(new ValorRecurso("Mineradora", 1630));
+            teste.Add(new ValorRecurso("Petroleo", 710));
+
+            valores.Persist(new Valores() { id = 9, tipo = "Madeireira", nivel = 4, valorDinheiro = 7600, limiteArmazenamento = 150, ValorRecursos = teste });
+
+            teste = new List<ValorRecurso>();
+            teste.Add(new ValorRecurso("Madeireira", 5430));
+            teste.Add(new ValorRecurso("Mineradora", 4030));
+            teste.Add(new ValorRecurso("Petroleo", 2230));
+
+            valores.Persist(new Valores() { id = 10, tipo = "Madeireira", nivel = 5, valorDinheiro = 7600, limiteArmazenamento = 200, ValorRecursos = teste });
         }
     }
 }

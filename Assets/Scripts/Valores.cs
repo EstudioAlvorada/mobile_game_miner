@@ -16,6 +16,7 @@ namespace Assets.Scripts
         public string tipo { get; set; }
         public int nivel { get; set; }
         public float valorDinheiro { get; set; }
+        public float limiteArmazenamento { get; set; }
         public List<ValorRecurso> ValorRecursos { get; set; } 
 
     }
@@ -37,4 +38,6 @@ namespace Assets.Scripts
         public bool aberto { get; set; }
         public DateTime ultimoGame { get; set; }
     }
+
+   
 }

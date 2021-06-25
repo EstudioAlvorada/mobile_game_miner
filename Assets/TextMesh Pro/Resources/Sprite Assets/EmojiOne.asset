@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: dffef66376be4fa480fb02b19edbe903, type: 3}
+        m_Texture: {fileID: 2800000, guid: 46fddcac766ccd64f99eb60f0b2583ca, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -71,7 +71,7 @@ MonoBehaviour:
     m_StrikethroughOffset: 0
     m_StrikethroughThickness: 0
     m_TabWidth: 0
-  spriteSheet: {fileID: 2800000, guid: dffef66376be4fa480fb02b19edbe903, type: 3}
+  spriteSheet: {fileID: 2800000, guid: 46fddcac766ccd64f99eb60f0b2583ca, type: 3}
   m_SpriteCharacterTable:
   - m_ElementType: 2
     m_Unicode: 128523
@@ -83,26 +83,26 @@ MonoBehaviour:
     m_Unicode: 128522
     m_GlyphIndex: 0
     m_Scale: 1
-    m_Name: Smiling face with smiling eyes
-    m_HashCode: -1318250903
+    m_Name: Madeireira
+    m_HashCode: -752008503
   - m_ElementType: 2
     m_Unicode: 128525
     m_GlyphIndex: 2
     m_Scale: 1
-    m_Name: 1f60d
-    m_HashCode: 57188341
+    m_Name: Petroleo
+    m_HashCode: 1008491514
   - m_ElementType: 2
     m_Unicode: 128526
     m_GlyphIndex: 3
     m_Scale: 1
-    m_Name: 1f60e
-    m_HashCode: 57188340
+    m_Name: Casa
+    m_HashCode: 2445296
   - m_ElementType: 2
     m_Unicode: 128512
     m_GlyphIndex: 4
     m_Scale: 1
-    m_Name: Grinning face
-    m_HashCode: -95541379
+    m_Name: Mineradora
+    m_HashCode: 388739780
   - m_ElementType: 2
     m_Unicode: 128513
     m_GlyphIndex: 5
@@ -205,6 +205,12 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: icones_3
     m_HashCode: 1245490673
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 20
+    m_Scale: 1
+    m_Name: EMOJI_2
+    m_HashCode: 897372201
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -214,10 +220,10 @@ MonoBehaviour:
       m_HorizontalBearingY: 115.6
       m_HorizontalAdvance: 128
     m_GlyphRect:
-      m_X: 0
-      m_Y: 384
-      m_Width: 128
-      m_Height: 128
+      m_X: 13
+      m_Y: 415
+      m_Width: 118
+      m_Height: 119
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: 0}
@@ -226,7 +232,7 @@ MonoBehaviour:
       m_Width: 313.9
       m_Height: 95.9
       m_HorizontalBearingX: 0
-      m_HorizontalBearingY: 98
+      m_HorizontalBearingY: 98.43
       m_HorizontalAdvance: 127.92
     m_GlyphRect:
       m_X: 160
@@ -253,16 +259,16 @@ MonoBehaviour:
     sprite: {fileID: 0}
   - m_Index: 3
     m_Metrics:
-      m_Width: 128
-      m_Height: 128
-      m_HorizontalBearingX: 0
-      m_HorizontalBearingY: 115.6
-      m_HorizontalAdvance: 128
+      m_Width: 134.37
+      m_Height: 129.54
+      m_HorizontalBearingX: 0.2
+      m_HorizontalBearingY: 117.8
+      m_HorizontalAdvance: 157.9
     m_GlyphRect:
-      m_X: 384
-      m_Y: 384
-      m_Width: 128
-      m_Height: 128
+      m_X: 386
+      m_Y: 394
+      m_Width: 126
+      m_Height: 145
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: 0}
@@ -510,6 +516,21 @@ MonoBehaviour:
     m_AtlasIndex: 0
     sprite: {fileID: -3338159118471105260, guid: 3a9b2576ec6395c43bf5e8a6c4104295,
       type: 3}
+  - m_Index: 20
+    m_Metrics:
+      m_Width: 515
+      m_Height: 516
+      m_HorizontalBearingX: -257.5
+      m_HorizontalBearingY: 258
+      m_HorizontalAdvance: 515
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 0
+      m_Width: 515
+      m_Height: 516
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: 21300000, guid: 46fddcac766ccd64f99eb60f0b2583ca, type: 3}
   spriteInfoList:
   - id: 0
     x: 0
