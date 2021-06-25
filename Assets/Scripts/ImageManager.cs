@@ -59,6 +59,7 @@ public class ImagemBLI
 
         imagens.Add(new Imagem(Resources.Load<Sprite>("Tela_principal_jogo"), "Background", 1));
 
+
     }
 
     public void SetAllImagens()
@@ -94,5 +95,15 @@ public class ImagemBLI
         Debug.Log(obj.name);
 
         return obj.gameObject.GetComponent<SpriteRenderer>().sprite = imagens.Where(p => p.nome == nome).FirstOrDefault().img;
+    }
+
+    public Sprite GetmagemUpgrade(string nome)
+    {
+        CarregaImagens();
+
+        GameObject obj = GameObject.FindGameObjectWithTag(nome);
+
+        return obj.gameObject.GetComponent<SpriteRenderer>().sprite = imagens.Where(p => p.nome == $"Upgrade{nome}").FirstOrDefault().img;
+
     }
 }

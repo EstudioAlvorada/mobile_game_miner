@@ -38,4 +38,6 @@ namespace Assets.Scripts
         public bool aberto { get; set; }
         public DateTime ultimoGame { get; set; }
     }
+
+   
 }

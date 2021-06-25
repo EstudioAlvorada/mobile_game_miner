@@ -13,6 +13,8 @@ public class HUD : MonoBehaviour
     [SerializeField]
     GameObject menu;
 
+    public string ultimoMenu;
+
     string[] btn = { "BtnCasa", "BtnMadeireira" };
 
     // Start is called before the first frame update
@@ -37,13 +39,16 @@ public class HUD : MonoBehaviour
         if (menu.active)
             menu.SetActive(false);
         else
+        {
             menu.SetActive(true);
+            UpgradePorNome("Casa");
+        }
     }
 
-    public void Upgrade(string tipo)
+    public void Upgrade()
     {
 
-        var valores = GameManager.Instance.valores.FirstOrDefault(p => p.tipo == tipo && p.nivel == GameManager.Instance.GetConstrucaoNivelByName(tipo));
+        var valores = GameManager.Instance.valores.FirstOrDefault(p => p.tipo == ultimoMenu && p.nivel == GameManager.Instance.GetConstrucaoNivelByName(ultimoMenu));
 
         GameManager.Instance.valores.ForEach(p => Debug.Log(p.valorDinheiro));
         GameManager.Instance.construcoes.ForEach(p => Debug.Log($"{p.numUpgrade}, {p.tipo}"));
@@ -74,13 +79,13 @@ public class HUD : MonoBehaviour
                     GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == i.recursoNome).pontosTotal -= i.recursoValor;
                 }
 
-                GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).numUpgrade++;
+                GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == ultimoMenu).numUpgrade++;
 
-                new ImagemBLI().SetImagem(tipo, GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).numUpgrade);
+                new ImagemBLI().SetImagem(ultimoMenu, GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == ultimoMenu).numUpgrade);
             }
         }
 
-        if(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").ativo == false && tipo == "Casa" && GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == tipo).numUpgrade > 2)
+        if(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").ativo == false && ultimoMenu == "Casa" && GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == ultimoMenu).numUpgrade > 2)
         {
             GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").ativo = true;
         }
@@ -141,4 +146,28 @@ public class HUD : MonoBehaviour
         }
     }
 
+    public void UpgradePorNome(string nome)
+    {
+        var obj = GameManager.Instance.GetConstrucaoNome(nome);
+
+        var panel = GameObject.Find("Canvas Principal/Menu/PanelUpgrade");
+
+        var valorConstrucao = GameManager.Instance.valores.First(p => p.tipo == nome && p.nivel == obj.numUpgrade);
+
+        string txtValor = $"<sprite=3><color=#FFF100> {valorConstrucao.valorDinheiro} </color>\n";
+
+        foreach (var x in valorConstrucao.ValorRecursos)
+        {
+            var cor = x.recursoNome == "Madeireira" ? "<sprite=1><color=#653C3C>" : x.recursoNome == "Mineradora" ? "<sprite=4><color=#525252>" : "";
+            txtValor += $"{cor + x.recursoValor} </color>\n";
+        }
+
+        panel.GetComponentInChildren<TextMeshProUGUI>().text = txtValor;
+
+        var butao = GameObject.Find("Canvas Principal/Menu/BtnUpgrade");
+
+        butao.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Upgrade{nome}");
+
+        ultimoMenu = nome;
+    }
 }
