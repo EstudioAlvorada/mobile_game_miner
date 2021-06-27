@@ -29,7 +29,7 @@ public class CameraMovimento : MonoBehaviour
             var valorMaximoY = limiteY <= 9.45 && limiteY >= -1 ? true : false;
 
             Camera.main.transform.position += new Vector3(valorMaximoX ? direction.x : 0, valorMaximoY ? direction.y : 0);
-            
+
         }
     }
     private Vector3 GetWorldPosition(float z)
