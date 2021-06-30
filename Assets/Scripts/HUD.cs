@@ -30,8 +30,6 @@ public class HUD : MonoBehaviour
         madeira.text = "<size=130><sprite name=Madeireira></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Madeireira").pontosTotal);
         minerio.text = "<size=130><sprite name=Mineradora></size>" + ScoreShow(GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").pontosTotal);
 
-        if(menu.active)
-            ValoresBtn();
     }
 
     public void AbrirMenu()
@@ -41,7 +39,7 @@ public class HUD : MonoBehaviour
         else
         {
             menu.SetActive(true);
-            UpgradePorNome("Casa");
+            UpgradePorNome(string.IsNullOrEmpty(ultimoMenu) ? "Casa" : ultimoMenu);
         }
     }
 
@@ -89,6 +87,8 @@ public class HUD : MonoBehaviour
         {
             GameManager.Instance.construcoes.FirstOrDefault(p => p.tipo == "Mineradora").ativo = true;
         }
+
+        UpgradePorNome(ultimoMenu);
     }
 
 
@@ -126,26 +126,6 @@ public class HUD : MonoBehaviour
 
     }
    
-    public void ValoresBtn()
-    {
-        foreach(var i in btn)
-        {
-            var butao = GameObject.Find("Canvas Principal/Menu/" + i);
-
-            var valorConstrucao = GameManager.Instance.valores.First(p => i.Contains(p.tipo) && p.nivel == GameManager.Instance.construcoes.First(x => x.tipo == p.tipo).numUpgrade);
-
-            string txtValor = $"<sprite=3><color=#FFF100> {valorConstrucao.valorDinheiro} </color>";
-
-            foreach(var x in valorConstrucao.ValorRecursos)
-            {
-                var cor = x.recursoNome == "Madeireira" ? "<sprite=1><color=#653C3C>" : x.recursoNome == "Mineradora" ? "<sprite=4><color=#525252>" : "";
-                txtValor += $"{cor + x.recursoValor} </color>";
-            }
-
-            butao.GetComponentInChildren<TextMeshProUGUI>().text = txtValor;
-        }
-    }
-
     public void UpgradePorNome(string nome)
     {
         var obj = GameManager.Instance.GetConstrucaoNome(nome);

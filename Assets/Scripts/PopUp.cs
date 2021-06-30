@@ -30,7 +30,6 @@ public class PopUp : MonoBehaviour
         {
             Vector3 pos = Input.mousePosition;
             Collider2D colisor = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(pos));
-            Debug.Log(colisor.tag);
 
 
             //casa (ponto:casa)
